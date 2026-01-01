@@ -1,27 +1,32 @@
 import logging
-import sqlite3
-from sqlite3 import DatabaseError
+
+import psycopg
+
+from base import config
 
 
 class ConnectionManager:
     """
     This is a context manager,
     for creating and closing connection,
-    with the SQLite Database
+    with the Postgres Database
     """
 
-    def __init__(self, filename) -> None:
-        self.filename = filename
+    def __init__(self) -> None:
+        pass
 
     def __enter__(self):
         logging.info("Establishing the database connection....")
-        try:
-            self.con = sqlite3.connect(self.filename)
-            self.cursor = self.con.cursor()
-            return self
-        except DatabaseError as ex:
-            raise DatabaseError from ex
+        self.conn = psycopg.connect(
+            dbname=config.DB_NAME,
+            user=config.DB_USER,
+            password=config.DB_PASSWORD,
+            host=config.DB_HOST,
+            port=config.DB_PORT,
+        )
+        self.cursor = self.conn.cursor()
+        return self
 
     def __exit__(self, type, value, traceback):
         logging.info("Closing the database connection....")
-        self.con.close()
+        self.conn.close()
