@@ -1,0 +1,29 @@
+[project]
+name = "ormlet"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "ruff>=0.14.10",
+]
+
+[tool.ruff]
+exclude = [
+  '.git',
+  '.venv',
+  'migrations',
+  'install',
+]
+line-length=79
+
+[tool.ruff.lint]
+select = ["E", "F", "I","W","TCH","PTH"]
+extend-select= ["T100"]
+
+[tool.ruff.format]
+indent-style="space"
+
