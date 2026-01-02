@@ -1,5 +1,5 @@
-from .db import ConnectionManager
+from .db import ModelManager
 
 __all__ = [
-    "ConnectionManager",
+    "ModelManager",
 ]

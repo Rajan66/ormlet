@@ -3,32 +3,22 @@ import logging
 from dotenv import load_dotenv
 
 from base import Logger
-from managers import ConnectionManager
+from examples.person import Person
+from helpers.model import ModelHelper
+from managers import ModelManager
 
 load_dotenv()
 
 
 def main():
     Logger.configure()
+    model_manager = ModelManager()
+
+    model_name = ModelHelper.get_model_name(Person)
+    model_fields = ModelHelper.get_model_fields(Person)
 
     try:
-        with ConnectionManager() as conn:  # noqa F401
-            try:
-                logging.info("Creating table")
-                # TODO: table creation not working, conn successful
-                conn.cursor.execute(
-                    """
-                    CREATE TABLE IF NOT EXISTS test_person(
-                        name VARCHAR(50) UNIQUE NOT NULL,
-                        age INT
-                    )
-                    """
-                )
-                conn.cursor.execute("SELECT to_regclass('test_person');")
-                logging.info("Table created successfully...")
-            except Exception as ex:
-                logging.error(f"Failed to create table: {ex}")
-                raise
+        model_manager.create_table(model_name, model_fields)
     except Exception as ex:
         logging.critical(f"Connection Failed: {ex}")
         raise

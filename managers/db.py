@@ -1,32 +1,33 @@
 import logging
 
-import psycopg
+from psycopg import sql
 
-from base import config
+from base import ConnectionManager
 
 
-class ConnectionManager:
-    """
-    This is a context manager,
-    for creating and closing connection,
-    with the Postgres Database
-    """
+class DATA_TYPES:
+    str = ("varchar", "VARCHAR")
+    int = ("int", "INT")
+    bool = ("boolean", "BOOLEAN")
 
-    def __init__(self) -> None:
+
+class ModelManager:
+    def __init__(self):
         pass
 
-    def __enter__(self):
-        logging.info("Establishing the database connection....")
-        self.conn = psycopg.connect(
-            dbname=config.DB_NAME,
-            user=config.DB_USER,
-            password=config.DB_PASSWORD,
-            host=config.DB_HOST,
-            port=config.DB_PORT,
-        )
-        self.cursor = self.conn.cursor()
-        return self
-
-    def __exit__(self, type, value, traceback):
-        logging.info("Closing the database connection....")
-        self.conn.close()
+    def create_table(self, table_name, fields):
+        # TODO: map the fields with enum?
+        with ConnectionManager() as connection:
+            query = """
+                CREATE TABLE IF NOT EXISTS "%s" (
+                    name VARCHAR,
+                    age INT
+                )
+                """
+            try:
+                connection.cursor.execute(sql.SQL(query % table_name))
+                connection.conn.commit()
+                logging.info("Table creation successful")
+            except Exception as ex:
+                logging.error(f"Failed to create table {table_name}: {ex}")
+                raise
