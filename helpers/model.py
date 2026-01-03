@@ -6,6 +6,6 @@ class ModelHelper:
     @staticmethod
     def get_model_fields(model_class):
         fields = model_class.fields.copy()
-        for key, _ in fields.items():
-            fields[key] = type(key)
+        for key, value in fields.items():
+            fields[key] = type(value).__name__
         return fields

@@ -3,7 +3,7 @@ import logging
 from dotenv import load_dotenv
 
 from base import Logger
-from examples.person import Person
+from examples.user import User
 from helpers.model import ModelHelper
 from managers import ModelManager
 
@@ -14,8 +14,8 @@ def main():
     Logger.configure()
     model_manager = ModelManager()
 
-    model_name = ModelHelper.get_model_name(Person)
-    model_fields = ModelHelper.get_model_fields(Person)
+    model_name = ModelHelper.get_model_name(User)
+    model_fields = ModelHelper.get_model_fields(User)
 
     try:
         model_manager.create_table(model_name, model_fields)

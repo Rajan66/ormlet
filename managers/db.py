@@ -1,14 +1,15 @@
 import logging
+from enum import Enum
 
 from psycopg import sql
 
 from base import ConnectionManager
 
 
-class DATA_TYPES:
-    str = ("varchar", "VARCHAR")
-    int = ("int", "INT")
-    bool = ("boolean", "BOOLEAN")
+class DATA_TYPES(Enum):
+    str = "varchar"
+    int = "int"
+    bool = "boolean"
 
 
 class ModelManager:
@@ -16,14 +17,22 @@ class ModelManager:
         pass
 
     def create_table(self, table_name, fields):
-        # TODO: map the fields with enum?
+        for key, value in fields.items():
+            fields[key] = (
+                DATA_TYPES[value].value
+                if value in DATA_TYPES.__members__.keys()
+                else value
+            )
+
         with ConnectionManager() as connection:
-            query = """
-                CREATE TABLE IF NOT EXISTS "%s" (
-                    name VARCHAR,
-                    age INT
-                )
-                """
+            query = 'CREATE TABLE IF NOT EXISTS "%s"('
+            columns = ",".join(
+                [
+                    f"{col_name} {col_type}"
+                    for col_name, col_type in fields.items()
+                ]
+            )
+            query += columns + ");"
             try:
                 connection.cursor.execute(sql.SQL(query % table_name))
                 connection.conn.commit()
