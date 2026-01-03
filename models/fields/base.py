@@ -12,13 +12,15 @@ class Field(ABC):
         unique=False,
         max_length=None,
         min_length=None,
+        default=None,
     ):
+        self.max_length = max_length
+        self.min_length = min_length
         self.blank = blank
         self.null = null
         self.db_index = db_index
         self.unique = unique
-        self.min_length = min_length
-        self.max_length = max_length
+        self.default = default
 
     def get_column_type(self):
         return DatabaseDataType[self.get_internal_type()].value
