@@ -1,11 +1,16 @@
+import models
 from models.base import Model
 
 
 class User(Model):
-    # TODO: change the datatype into separate classes
-    fields = {
-        "email": "",
-        "name": "",
-        "age": 0,
-        "is_active": False,
-    }
+    email = models.CharField(
+        unique=True,
+    )
+
+    name = models.CharField()
+
+    age = models.IntegerField(
+        null=True,
+    )
+
+    is_active = models.BooleanField()
