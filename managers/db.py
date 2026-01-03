@@ -10,7 +10,6 @@ class ModelManager:
         pass
 
     def create_table(self, table_name, fields):
-        breakpoint()
         with ConnectionManager() as connection:
             query = 'CREATE TABLE IF NOT EXISTS "%s"('
             columns = ",".join(
