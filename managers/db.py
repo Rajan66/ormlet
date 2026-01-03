@@ -10,7 +10,8 @@ class ModelManager:
     def __init__(self):
         pass
 
-    def create_table(self, table_name, fields):
+    @staticmethod
+    def create_table(table_name, fields):
         with ConnectionManager() as connection:
             query = 'CREATE TABLE IF NOT EXISTS "%s"('
             columns = []

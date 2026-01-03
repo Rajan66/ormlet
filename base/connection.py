@@ -5,6 +5,8 @@ import psycopg
 from .env_config import config
 
 
+# TODO: make it an singleton maybe.
+# does every client require a separate connection (Research)
 class ConnectionManager:
     """
     This is a context manager,

@@ -1,8 +1,7 @@
 import models
-from models.base import Model
 
 
-class User(Model):
+class User(models.Model):
     email = models.CharField(
         unique=True,
         null=False,
