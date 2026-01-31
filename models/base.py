@@ -1,5 +1,6 @@
 from typing import ClassVar
 
+from managers import Manager
 from models.fields.base import Field
 
 
@@ -13,7 +14,7 @@ class Model:
     def __init_subclass__(cls, **kwargs) -> None:
         super().__init_subclass__(**kwargs)
         cls._tablename = kwargs.get("tablename", cls.__name__.lower())
-        # cls.objects = Manager() # TODO: implement objects manager
+        cls.objects = Manager(cls)
 
         cls._fields = {
             name: value

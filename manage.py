@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from commands.migrate import MigrateCommand
 from commands.model_list import ListModelCommand
 from commands.registry import CommandRegistry
+from commands.run_query import RunQueryCommand
 from setup import setup_app
 
 load_dotenv()
@@ -16,6 +17,7 @@ def main():
     registry = CommandRegistry()
     registry.register(ListModelCommand)
     registry.register(MigrateCommand)
+    registry.register(RunQueryCommand)
 
     parser = argparse.ArgumentParser()
     parser.add_argument("command", choices=registry.all())
