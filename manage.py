@@ -2,10 +2,12 @@ import argparse
 
 from dotenv import load_dotenv
 
-from commands.migrate import MigrateCommand
-from commands.model_list import ListModelCommand
-from commands.registry import CommandRegistry
-from commands.run_query import RunQueryCommand
+from commands import (
+    CommandRegistry,
+    ListModelCommand,
+    MigrateCommand,
+    RunQueryCommand,
+)
 from setup import setup_app
 
 load_dotenv()

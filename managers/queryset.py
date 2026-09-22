@@ -11,7 +11,7 @@ class QuerySet:
     def get(self, *_, **kwargs):
         query = "SELECT * FROM %s"
         if kwargs:
-            query += "WHERE "
+            query += " WHERE "
             for key, value in kwargs.items():
                 query += f"{key}={value}"
         query += ";"
