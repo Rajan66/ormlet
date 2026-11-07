@@ -30,7 +30,7 @@ class Field(ABC):
 
     def get_column_type(self):
         """Resolve the Postgres column type from DatabaseDataType."""
-        return DatabaseDataType[self.get_internal_type()]
+        return DatabaseDataType[self.get_internal_type()].value
 
     def get_internal_type(self):
         """Return the Field subclass class name."""
