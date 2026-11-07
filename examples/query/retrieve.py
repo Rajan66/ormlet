@@ -12,7 +12,7 @@ class RetrieveQueryService:
 
     def _run(self):
         # results = Food.objects.all()
-        result = Food.objects.get(name="momo", origin="nepal")
+        result = Food.objects.get(name="momo", origin="tibet")
 
         print("Query result:", result)
 
