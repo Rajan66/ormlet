@@ -17,8 +17,13 @@ class Manager:
 
         Returns the raw query string (not executed results).
         """
-        queryset = QuerySet(self.model).get(args, kwargs)
-        return queryset
+        queryset = QuerySet(self.model).get(args, **kwargs)
+        with ConnectionManager() as connection:
+            res = connection.cursor.execute(
+                sql.SQL(queryset % self.model._tablename)
+            )
+            logging.info("Results retrieved.")
+        return res.fetchone()
 
     def all(self):
         """
@@ -29,7 +34,7 @@ class Manager:
             res = connection.cursor.execute(
                 sql.SQL(queryset % self.model._tablename)
             )
-            logging.info("Results retrieved...")
+            logging.info("Results retrieved.")
 
         # TODO: should return queryset obj instead of result
         return res.fetchall()

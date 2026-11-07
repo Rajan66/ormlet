@@ -11,9 +11,10 @@ class RetrieveQueryService:
         self._run()
 
     def _run(self):
-        results = Food.objects.all()
+        # results = Food.objects.all()
+        result = Food.objects.get(name="momo", origin="nepal")
 
-        print("Query result:")
+        print("Query result:", result)
 
-        for row in results:
-            print(row)
+        # for row in results:
+        #     print(row)

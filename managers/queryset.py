@@ -18,8 +18,10 @@ class QuerySet:
         query = "SELECT * FROM %s"
         if kwargs:
             query += " WHERE "
-            for key, value in kwargs.items():
-                query += f"{key}={value}"
+            for index, (key, value) in enumerate(kwargs.items()):
+                if index > 1:
+                    query += "AND "
+                query += f"{key}='{value}'"
         query += ";"
         return query
 
