@@ -2,6 +2,8 @@ from examples.models.food import Food
 
 
 class RetrieveQueryService:
+    """Example service that queries Food and prints rows."""
+
     def __init__(self) -> None:
         pass
 

@@ -7,11 +7,14 @@ from helpers.model import ModelHelper
 
 
 class ModelManager:
+    """Low-level manager that executes DDL against Postgres."""
+
     def __init__(self):
         pass
 
     @staticmethod
     def create_table(table_name, fields):
+        """Build and execute CREATE TABLE IF NOT EXISTS for all fields."""
         with ConnectionManager() as connection:
             query = 'CREATE TABLE IF NOT EXISTS "%s"('
             columns = []

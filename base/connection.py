@@ -5,13 +5,11 @@ import psycopg
 from .env_config import config
 
 
-# TODO: make it an singleton maybe.
-# does every client require a separate connection (Research)
 class ConnectionManager:
-    """
-    This is a context manager,
-    for creating and closing connection,
-    with the Postgres Database
+    """Context manager for a Postgres connection.
+
+    Opens a connection in ``__enter__`` and closes it when the ``with`` block
+    exits. Credentials come from base.env_config.config.
     """
 
     def __init__(self) -> None:

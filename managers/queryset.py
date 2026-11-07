@@ -5,10 +5,16 @@ if TYPE_CHECKING:
 
 
 class QuerySet:
+    """Build raw SQL SELECT queries for a model; does not execute queries."""
+
     def __init__(self, model: Model):
         self.model = model
 
     def get(self, *_, **kwargs):
+        """Build SELECT * FROM %s with WHERE key=value for each kwarg.
+
+        Positional args are ignored.
+        """
         query = "SELECT * FROM %s"
         if kwargs:
             query += " WHERE "
@@ -18,6 +24,9 @@ class QuerySet:
         return query
 
     def all(self):
+        """
+        Build SELECT <comma-separated fields> FROM %s using model._fields.
+        """
         fields = ""
         for index, field in enumerate(self.model._fields.keys()):
             if index == self.model._fields.__len__() - 1:

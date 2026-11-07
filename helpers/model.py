@@ -5,8 +5,12 @@ if TYPE_CHECKING:
 
 
 class ModelHelper:
+    """Build raw SQL column-constraint fragments from a Field instance."""
+
     @staticmethod
     def get_column_constraints(field, field_obj: Field) -> str:
+        """Return raw SQL constraint fragments for max_length, min_length,
+        null, unique, and default attributes of field_obj."""
         constraints = ""
         for key, value in field_obj.__dict__.items():
             if key is not None:

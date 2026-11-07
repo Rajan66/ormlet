@@ -6,12 +6,16 @@ from commands.base import Command
 if TYPE_CHECKING:
     from models.base import Model
 
+# Example model classes keyed by name; discovered dynamically via
+# examples.models.__all__ + getattr.
 model_list: dict[str, Model] = {
     name: getattr(model_classes, name) for name in model_classes.__all__
 }
 
 
 class ListModelCommand(Command):
+    """Print every registered example model name with a 1-based index."""
+
     name = "listmodel"
 
     def run(self):
